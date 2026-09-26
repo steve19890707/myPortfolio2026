@@ -3,6 +3,16 @@ import { assets, assetUrl } from './content/config';
 
 let tracks: Record<keyof typeof assets.audio, Howl> | undefined;
 let enabled = false;
+let musicPaused = false;
+function syncMusic() {
+  if (!tracks) return;
+  if (!enabled || musicPaused || document.hidden) tracks.bgm.pause();
+  else if (!tracks.bgm.playing()) tracks.bgm.play();
+}
+export function setMusicPaused(value: boolean) {
+  musicPaused = value;
+  syncMusic();
+}
 export function audioStatus() {
   return { enabled, state: tracks?.click.state(), musicState: tracks?.bgm.state(), playing: tracks?.bgm.playing() ?? false, context: Howler.ctx?.state };
 }
@@ -16,8 +26,8 @@ function init() {
 export function setAudio(value: boolean) {
   enabled = value;
   if (value) {
-    const audio = init();
-    if (!document.hidden && !audio.bgm.playing()) audio.bgm.play();
+    init();
+    syncMusic();
   }
   else Object.values(tracks ?? {}).forEach(track => track.stop());
 }
@@ -26,5 +36,5 @@ export function playSound(key: 'click' | 'open' | 'close') {
 }
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) Object.values(tracks ?? {}).forEach(track => track.pause());
-  else if (enabled && tracks && !tracks.bgm.playing()) tracks.bgm.play();
+  else syncMusic();
 });

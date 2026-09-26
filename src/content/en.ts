@@ -8,7 +8,7 @@ export const en = {
   sections: { profile: 'Profile', skills: 'Skills', interests: 'Interests', experience: 'Experience', projects: 'Projects', contact: 'Contact' },
   furniture: { profile: 'Profile signal', skills: 'Skill console', interests: 'Personal mode', experience: 'Career archive', projects: 'Project playlist' },
   quickAccess: 'Quick access', language: 'Language', soundOn: 'Mute audio', soundOff: 'Enable audio',
-  motionOn: 'Reduce motion', motionOff: 'Enable motion', close: 'Close',
+  motionOn: 'Pause animation and music', motionOff: 'Resume animation and music', close: 'Close',
   loading: 'Connecting to room...', sceneError: 'Room unavailable. All sections are available below.',
   placeholder: 'DEMO CONTENT', placeholderNote: 'Sample information. Final details are on the way.',
   footer: 'A SMALL ROOM. A WORLD OF POSSIBILITIES.', copyright: '2026 / ALEX LIN',

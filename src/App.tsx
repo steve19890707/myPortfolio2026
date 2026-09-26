@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowUpRight, Volume2, VolumeX, Globe2, Pause, Play, UserRound, Code2, BriefcaseBusiness, Disc3, Heart, Mail } from 'lucide-react';
 import { languages, panelIds, type PanelId } from './content/config';
 import { useRoom } from './store';
-import { playSound,setAudio } from './audio';
+import { playSound,setAudio,setMusicPaused } from './audio';
 import Panel,{ResumeLink} from './Panel';
 import CityBackdrop from './scene/CityBackdrop';
 
@@ -18,7 +18,7 @@ export default function App(){
       <div className="header-controls"><div className="language-control"><Globe2 size={15}/><select value={i18n.language} aria-label={t('language')} onChange={event=>{void i18n.changeLanguage(event.target.value);playSound('click');}}>{languages.map(l=><option value={l.id} key={l.id}>{l.label}</option>)}</select></div>
         <span className="control-divider"/>
         <button className="icon-button" title={t(sound?'soundOn':'soundOff')} aria-label={t(sound?'soundOn':'soundOff')} aria-pressed={sound} onClick={()=>{setAudio(!sound);setSound(!sound);}}>{sound?<Volume2 size={18}/>:<VolumeX size={18}/>}</button>
-        <button className="icon-button motion-button" title={t(reducedMotion?'motionOff':'motionOn')} aria-label={t(reducedMotion?'motionOff':'motionOn')} aria-pressed={!reducedMotion} onClick={toggleMotion}>{reducedMotion?<Play size={17}/>:<Pause size={17}/>}</button>
+        <button className="icon-button motion-button" title={t(reducedMotion?'motionOff':'motionOn')} aria-label={t(reducedMotion?'motionOff':'motionOn')} aria-pressed={!reducedMotion} onClick={()=>{setMusicPaused(!reducedMotion);toggleMotion();}}>{reducedMotion?<Play size={17}/>:<Pause size={17}/>}</button>
       </div>
     </header>
     <main>

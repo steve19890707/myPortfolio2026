@@ -23,6 +23,12 @@ test('room furniture, panels, language, keyboard, and audio',async({page})=>{
   expect(await page.locator('html').getAttribute('data-audio-starts')).toBeNull();
   await page.getByRole('button',{name:'Enable audio',exact:true}).click();await expect(page.getByRole('button',{name:'Mute audio',exact:true})).toHaveAttribute('aria-pressed','true');
   await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';const audio=await import(path);return audio.audioStatus();})).toMatchObject({enabled:true,state:'loaded',musicState:'loaded',playing:true});
+  await page.locator('.motion-button').click();
+  await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';return (await import(path)).audioStatus().playing;})).toBe(false);
+  await page.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';return (await import(path)).audioStatus().playing;})).toBe(false);
+  await page.locator('.motion-button').click();
+  await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';return (await import(path)).audioStatus().playing;})).toBe(true);
   await page.getByRole('button',{name:'Mute audio',exact:true}).click();
   await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';const audio=await import(path);return audio.audioStatus();})).toMatchObject({enabled:false,playing:false});
   expect(errors).toEqual([]);
