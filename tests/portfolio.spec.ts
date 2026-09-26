@@ -22,15 +22,17 @@ test('room furniture, panels, language, keyboard, and audio',async({page})=>{
   await page.getByRole('button',{name:'Close',exact:true}).click();
   expect(await page.locator('html').getAttribute('data-audio-starts')).toBeNull();
   await page.getByRole('button',{name:'Enable audio',exact:true}).click();await expect(page.getByRole('button',{name:'Mute audio',exact:true})).toHaveAttribute('aria-pressed','true');
-  await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';const audio=await import(path);return audio.audioStatus();})).toMatchObject({playing:true,state:'loaded',context:'running'});
-  await page.getByRole('button',{name:'Mute audio',exact:true}).click();expect(errors).toEqual([]);
+  await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';const audio=await import(path);return audio.audioStatus();})).toMatchObject({enabled:true,state:'loaded',musicState:'loaded',playing:true});
+  await page.getByRole('button',{name:'Mute audio',exact:true}).click();
+  await expect.poll(()=>page.evaluate(async()=>{const path='/src/audio.ts';const audio=await import(path);return audio.audioStatus();})).toMatchObject({enabled:false,playing:false});
+  expect(errors).toEqual([]);
 });
 
 for(const [name,width,height]of [['desktop',1440,1000],['tablet',820,1180],['mobile',390,844],['small-mobile',320,740]] as const){
   test(`${name}: visible canvas and responsive panels`,async({page})=>{
     await page.setViewportSize({width,height});await page.goto('/');await expect(page.locator('#tv-profile')).toBeVisible();
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
-    await expect(page.locator('body')).toHaveCSS('background-color','rgb(16, 16, 25)');
+    await expect(page.locator('body')).toHaveCSS('background-color','rgb(26, 15, 35)');
     const canvas=page.locator('.room-stage canvas');await expect(canvas).toBeVisible();
     // Inspect composited pixels, not the discarded WebGL drawing buffer.
     const pixels=PNG.sync.read(await canvas.screenshot()).data;
@@ -44,6 +46,33 @@ for(const [name,width,height]of [['desktop',1440,1000],['tablet',820,1180],['mob
     await page.screenshot({path:`test-results/${name}-panel.png`,fullPage:true});
   });
 }
+
+test('desktop intro expands toward the room and tablet keeps the room below it',async({page})=>{
+  test.setTimeout(90000);
+  for(const width of [1024,1100,1440,2048]){
+    await page.setViewportSize({width,height:900});await page.goto('/');
+    await expect(page.locator('#tv-profile')).toBeVisible();
+    const intro=await page.locator('.intro').boundingBox();
+    const scene=await page.locator('.scene-section').boundingBox();
+    const description=await page.locator('.intro-description').boundingBox();
+    expect(intro!.width).toBeGreaterThanOrEqual(350);
+    expect(intro!.width).toBeLessThanOrEqual(500);
+    expect(description!.width).toBeGreaterThanOrEqual(340);
+    expect(scene!.x-intro!.x-intro!.width).toBeLessThan(150);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+    if(width===2048)await page.screenshot({path:'test-results/wide-desktop.png',fullPage:true});
+  }
+  for(const width of [1000,900,820]){
+    await page.setViewportSize({width,height:1100});await page.goto('/');
+    await expect(page.locator('#tv-profile')).toBeVisible();
+    const intro=await page.locator('.intro').boundingBox();
+    const scene=await page.locator('.scene-section').boundingBox();
+    const description=await page.locator('.intro-description').boundingBox();
+    expect(description!.width).toBeGreaterThan(500);
+    expect(scene!.y).toBeGreaterThanOrEqual(intro!.y+intro!.height);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+  }
+});
 
 test('reduced motion is honored and quick access works',async({page})=>{
   await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');await expect(page.locator('.app')).toHaveClass(/reduced-motion/);

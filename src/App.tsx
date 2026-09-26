@@ -5,6 +5,7 @@ import { languages, panelIds, type PanelId } from './content/config';
 import { useRoom } from './store';
 import { playSound,setAudio } from './audio';
 import Panel,{ResumeLink} from './Panel';
+import CityBackdrop from './scene/CityBackdrop';
 
 const Room=lazy(()=>import('./scene/Room'));
 const icons={profile:UserRound,skills:Code2,experience:BriefcaseBusiness,projects:Disc3,interests:Heart,contact:Mail};
@@ -22,6 +23,7 @@ export default function App(){
     </header>
     <main>
       <div className="main-layout">
+        <CityBackdrop/>
         <section className="intro"><div className="availability"><span/>{t('availability')}</div><p className="eyebrow intro-code">HELLO WORLD / 001</p><h1>{t('firstName')}<br/>{t('lastName')}<span className="name-dot">.</span></h1><h2>{t('role')}<br/><span>{t('roleSecond')}</span></h2><p className="intro-description">{t('introduction')}</p>
           <button className="nes-btn is-primary primary-cta" onClick={()=>show('projects')}>{t('enter')}<ArrowUpRight size={18}/></button>
           <ResumeLink/>

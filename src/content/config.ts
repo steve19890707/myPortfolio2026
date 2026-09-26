@@ -5,7 +5,7 @@ export const languages = [{ id: 'en', label: 'English' }, { id: 'zh-TW', label: 
 // Paths are relative to public/. Empty links are intentionally disabled.
 export const assets = {
   avatar: '', resumePdf: '',
-  audio: { click: 'audio/click-ui-soft.wav', open: 'audio/panel-open.wav', close: 'audio/panel-close.wav', bgm: 'audio/room-bgm-loop.wav' },
+  audio: { click: 'audio/click-ui-soft.wav', open: 'audio/panel-open.wav', close: 'audio/panel-close.wav', bgm: 'audio/game-loop.wav' },
 };
 export const contact = { email: '', github: '', linkedin: '' };
 export const projectLinks: Record<string, { demo: string; source: string; caseStudy: string }> = {

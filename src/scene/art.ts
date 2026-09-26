@@ -4,7 +4,7 @@ const S = Math.sqrt(3) / 2;
 type Point = [number, number];
 type Ctx = CanvasRenderingContext2D;
 export const project = (x: number, y: number, z = 0): Point => [420 + (x - y) * S, 278 + (x + y) / 2 - z];
-const colors = { line: '#141324', top: '#665377', left: '#342c4e', right: '#49375e', cyan: '#74f1d0', pink: '#e97cac', yellow: '#edc788' };
+const colors = { line: '#141324', top: '#9b57b8', left: '#623574', right: '#804194', cyan: '#74f1d0', pink: '#f284b3', yellow: '#edc788' };
 export function raster(draw: (c: Ctx) => void, width = W, height = H) {
   const canvas = document.createElement('canvas');
   canvas.width = width / 2; canvas.height = height / 2;
@@ -33,21 +33,21 @@ export function roomBase() {
   return raster(c => {
     // Floor thickness, a quiet ground shadow, and two true-isometric walls.
     polygon(c, [[102,470],[418,656],[747,466],[427,283]], '#0b0d15', '#0b0d15', 0);
-    box(c, 0, 0, -15, 340, 340, 15, '#4a3d5c', '#242238', '#2d2940');
-    polygon(c, [project(0,0),project(0,340),project(0,340,248),project(0,0,248)], '#30273e');
-    polygon(c, [project(0,0),project(340,0),project(340,0,248),project(0,0,248)], '#252436');
+    box(c, 0, 0, -15, 340, 340, 15, '#754193', '#38234c', '#49265f');
+    polygon(c, [project(0,0),project(0,340),project(0,340,248),project(0,0,248)], '#603073');
+    polygon(c, [project(0,0),project(340,0),project(340,0,248),project(0,0,248)], '#482551');
     for (let n=0;n<=340;n+=34) {
-      line(c,[project(n,0,1),project(n,340,1)], '#57475f',1);
-      line(c,[project(0,n,1),project(340,n,1)], '#57475f',1);
+      line(c,[project(n,0,1),project(n,340,1)], '#a66bbe',1);
+      line(c,[project(0,n,1),project(340,n,1)], '#a66bbe',1);
     }
     for(let n=0;n<340;n+=68) {
-      line(c,[project(0,n,10),project(0,n,240)],'#3e314c',1);
-      line(c,[project(n,0,8),project(n,0,240)],'#343045',1);
+      line(c,[project(0,n,10),project(0,n,240)],'#7f3e91',1);
+      line(c,[project(n,0,8),project(n,0,240)],'#66316f',1);
     }
-    line(c,[project(0,340,245),project(0,0,245),project(340,0,245)], '#8b526e',9);
+    line(c,[project(0,340,245),project(0,0,245),project(340,0,245)], '#d65fb7',9);
     line(c,[project(0,340,247),project(0,0,247),project(340,0,247)], '#e5b28a',3);
-    line(c,[project(0,334,8),project(0,0,8),project(333,0,8)], '#664d76',7);
-    line(c,[project(0,334,10),project(0,0,10)], '#9d7ba5',2);
+    line(c,[project(0,334,8),project(0,0,8),project(333,0,8)], '#a758c8',7);
+    line(c,[project(0,334,10),project(0,0,10)], '#c58cc7',2);
     line(c,[project(0,340,-10),project(340,340,-10),project(340,0,-10)], '#415962',3);
     // Window recess on the northwest wall.
     polygon(c,[project(0,286,93),project(0,48,93),project(0,48,235),project(0,286,235)],'#111627','#866d92',6);
@@ -73,28 +73,47 @@ export function windowFrame() {
 export function cityLayer(index: number) {
   return raster(c=> {
     if(index===0) { c.fillStyle='#182435';c.fillRect(0,0,280,145); }
-    const fills=['#283448','#253448','#192936'];
+    const fills=['#303252','#35334f','#292c47'];
     for(let i=0;i<12;i++) {
       const x=i*28-20+index*9, h=25+((i*37+index*43)%95), y=145-h;
       c.fillStyle=fills[index];c.fillRect(x,y,22, h);
-      c.fillStyle=index===0?'#4d6780':index===1?'#5b9e9c':'#84baa6';
+      c.fillStyle=index===0?'#6875a5':index===1?'#72a7b2':'#92c3b3';
       for(let a=0;a<4;a++) for(let b=0;b<h/9-1;b++) if((a+b+i)%3) c.fillRect(x+3+a*5,y+6+b*9,2,3);
-      if(index===1 && i%3===0) { c.fillStyle='#dd90bb';c.fillRect(x+6,y+9,5,23);c.fillStyle='#f3bfd6';for(let j=0;j<4;j++)c.fillRect(x+7,y+12+j*5,3,2); }
+      if(index===1 && i%3===0) { c.fillStyle=i%2?'#ff647e':'#dd90bb';c.fillRect(x+6,y+9,5,23);c.fillStyle='#ffd0cf';for(let j=0;j<4;j++)c.fillRect(x+7,y+12+j*5,3,2); }
       if(index===0){c.fillStyle='#516575';c.fillRect(x+10,y-12,2,12);}
+    }
+  },280,146);
+}
+export function citySignal(x: number, y: number, shape: 'sign' | 'windows' | 'antenna') {
+  return raster(c => {
+    c.fillStyle = '#702a48';
+    if (shape === 'sign') {
+      c.fillRect(x-4,y-4,17,30);
+      c.fillStyle = '#ff596f';c.fillRect(x,y,9,23);
+      c.fillStyle = '#ffd0bd';for(let i=0;i<3;i++)c.fillRect(x+2,y+3+i*7,5,2);
+    } else if (shape === 'windows') {
+      for(let i=0;i<3;i++)for(let j=0;j<3;j++){
+        c.fillStyle=(i+j)%2?'#ff687b':'#f77c73';
+        c.fillRect(x+i*5,y+j*8,3,4);
+      }
+    } else {
+      c.fillRect(x+4,y-13,2,15);
+      c.fillStyle='#ff5e72';c.fillRect(x+1,y-15,8,4);
+      c.fillStyle='#ffc1aa';c.fillRect(x+3,y-15,3,2);
     }
   },280,146);
 }
 export function rug() {
   return raster(c=>{
-    plane(c,102,123,2,149,156,'#353045');
-    plane(c,106,127,3,141,148,'#906078');
-    plane(c,113,134,4,127,134,'#574055');
-    plane(c,124,145,5,105,112,'#704b64');
+    plane(c,102,123,2,149,156,'#573063');
+    plane(c,106,127,3,141,148,'#d467b2');
+    plane(c,113,134,4,127,134,'#814079');
+    plane(c,124,145,5,105,112,'#a8498b');
     for(let i=0;i<5;i++){
-      line(c,[project(127+i*21,147,6),project(127+i*21,253,6)],'#986580',2);
-      line(c,[project(125,149+i*25,6),project(225,149+i*25,6)],'#986580',2);
+      line(c,[project(127+i*21,147,6),project(127+i*21,253,6)],'#b15d99',2);
+      line(c,[project(125,149+i*25,6),project(225,149+i*25,6)],'#b15d99',2);
     }
-    for(let i=0;i<12;i++) line(c,[project(106+i*12,280,2),project(106+i*12,287,2)],'#a3778c',2);
+    for(let i=0;i<12;i++) line(c,[project(106+i*12,280,2),project(106+i*12,287,2)],'#ba69a0',2);
   });
 }
 export function desk() {
@@ -202,10 +221,16 @@ function plant(c:Ctx,x:number,y:number,scale=1){
 export function props() {
   return raster(c=>{
     plant(c,15,299,1.1); plant(c,312,14,0.78);
-    // Floor lamp, small side table and a record stack.
+    // Floor lamp with a tapered shade, a visible socket, and a narrow stem.
     box(c,290,179,0,25,25,5,'#797082');
-    box(c,302,190,5,3,3,78,'#aba0a0');
-    box(c,289,178,81,29,28,27,'#f3d19f','#b89885','#d6b799');
+    box(c,302,190,5,3,3,74,'#aba0a0','#5a5066','#82768b');
+    box(c,299,187,79,9,9,5,'#8d6875','#6b4c66','#79566f');
+    const shadeBottom = [project(288,176,84),project(318,176,84),project(318,206,84),project(288,206,84)];
+    const shadeTop = [project(296,184,108),project(310,184,108),project(310,198,108),project(296,198,108)];
+    polygon(c,[shadeTop[3],shadeTop[2],shadeBottom[2],shadeBottom[3]],'#dcaa88','#50354e',2);
+    polygon(c,[shadeTop[2],shadeTop[1],shadeBottom[1],shadeBottom[2]],'#f4c58f','#50354e',2);
+    polygon(c,[shadeTop[0],shadeTop[1],shadeTop[2],shadeTop[3]],'#ffe7af','#50354e',2);
+    line(c,[shadeBottom[3],shadeBottom[2],shadeBottom[1]],'#8e5e68',2);
     box(c,193,287,2,8,8,29,'#4b445a');
     box(c,177,273,29,40,39,7,'#b08b91','#75596c','#8e687e');
     box(c,182,279,37,20,16,3,'#73968e');

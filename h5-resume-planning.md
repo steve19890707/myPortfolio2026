@@ -51,7 +51,6 @@ Scene elements:
 - The window should be placed on the northwest wall
 - Outside view: high-rise buildings, neon signs, distant lights, subtle city motion
 - Neon lights should continuously flicker with gentle fade-in/fade-out motion
-- Click sound effects and a looping BGM field should be prepared, with audio disabled until user activation
 - Furniture and props: TV, sofa, desk, side lamp, plants, shelves, screens, and personal items
 - Large furniture objects act as main interaction points
 - Clicking a main object opens a dialog/panel with resume information
@@ -300,7 +299,6 @@ These items are intentionally temporary or expected to change later. Keep them e
 - Click sound effect
 - Panel open sound
 - Panel close sound
-- Looping BGM
 - Optional room ambience
 - Initial audio can be generated directly from the current audio direction prompts
 - Audio files are replaceable assets and can be regenerated later if the mood changes
@@ -319,17 +317,6 @@ Initial audio files:
 - `click-ui-soft.wav`: short cyberpunk UI beep, around 80-150ms
 - `panel-open.wav`: soft electronic opening sound, around 300-600ms
 - `panel-close.wav`: short electronic closing sound, around 200-400ms
-- `room-bgm-loop.mp3` or `room-bgm-loop.ogg`: quiet mysterious synth loop, around 45-90 seconds
-
-BGM direction:
-
-- Calm
-- Mysterious
-- Low synth texture
-- Slow tempo
-- Seamless loop
-- Suitable for a neon cyberpunk personal studio
-- Final BGM direction should be adjusted after listening to the first generated version
 
 ### Configurable Layout
 
@@ -558,7 +545,6 @@ Recommended implementation flow:
 4. Open React DOM panels when hotspots are clicked.
 5. Add language switching after the panel structure is stable.
 6. Add gentle neon flicker and window-only parallax.
-7. Add click sound and looping BGM fields after the user-controlled audio toggle is implemented.
 
 Core feasibility:
 
@@ -662,9 +648,6 @@ Initial panel ids:
 - Audio is off by default.
 - Audio starts only after user action.
 - Prepare fields for click sound effects.
-- Prepare a field for looping BGM.
-- BGM style can be decided later.
-- Separate audio channels are useful later: BGM, ambience, UI click, panel open, panel close.
 
 ### Mobile Rules
 
@@ -682,7 +665,6 @@ Likely additions:
 
 - GSAP may be useful if neon flicker, room light pulses, and panel transitions need reusable timelines.
 - A pixel-art asset workflow is needed later: custom sprites, sprite sheets, or generated placeholder assets.
-- A sound plan is needed for BGM, click sounds, and optional ambience. Audio must stay off until the user enables it.
 
 Resolved decisions:
 
@@ -695,13 +677,11 @@ Resolved decisions:
 - Use adaptive proportional scaling across desktop, tablet, and mobile.
 - Place the window on the northwest wall.
 - Use layered sprites for the scene, with the main room/furniture taking 60% to 80% of visual importance.
-- Prepare audio fields for click effects and looping BGM, while keeping playback user-activated.
 - Write English source content first, then translate all supported languages after final content confirmation.
 - Positioning should prioritize frontend web engineering, web engineering, H5 web game development, full-stack engineering, and senior engineering.
 - Keep project links as reserved fields for later exact placement and presentation.
 - Use `gh-pages` npm script for GitHub Pages deployment.
 - Avatar direction should always be fictional cyberpunk persona, whether or not it becomes user-inspired later.
-- BGM mood is not a blocking decision. Generate an initial version from the current direction, then adjust after listening.
 
 Implementation risks:
 
@@ -755,7 +735,6 @@ First version:
 - Language switcher
 - Mobile touch navigation
 - Click sound fields
-- Looping BGM field
 - Local Vite dev server
 - Production build and preview script
 - GitHub Pages deployment-ready static build
@@ -765,7 +744,6 @@ Avoid in the first version:
 - Complex combat/game system
 - Full quest system
 - Too many scene transitions
-- Auto-playing music
 - Heavy custom asset pipeline
 - Backend-only features that cannot run on GitHub Pages
 
@@ -782,8 +760,6 @@ Build and verify the first interactive prototype in the project root. Keep all p
 - Project files and dependencies now live in `/Users/steveliu/Documents/ChatGPT/myPortfolio2026`.
 - Implemented the layered procedural isometric room, five furniture hotspots, six content panels, quick access, five language options, a fictional pixel persona, window-only parallax, and gentle neon animation.
 - English placeholders are intentionally shared across all language choices.
-- Added locally synthesized, replaceable click/open/close sounds and a 64-second BGM placeholder. These are not AI music service outputs; final direction remains subject to listening.
-- Audio starts muted; hidden tabs pause BGM and rendering. Reduced motion stops scene animation updates.
 - Formal PDF and real contact/project destinations remain reserved fields until supplied.
 - Production build and seven browser tests passed, including 320px/390px mobile, tablet, desktop, dialog focus, language persistence, audio playback, and animated/static canvas pixels.
 - GitHub Pages deployment scripts and relative asset paths are prepared. No GitHub repository, commit, or public deployment has been created.

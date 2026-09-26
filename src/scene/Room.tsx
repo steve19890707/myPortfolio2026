@@ -22,6 +22,14 @@ function World({ motion, ready }: { motion: boolean; ready: () => void }) {
     city.setFromMatrix(new Matrix(Math.sqrt(3)/2,-0.5,0,1,wx,wy)); root.addChild(city);
     const mask = new Graphics().rect(0,0,226,132).fill(0xffffff);city.addChild(mask);city.mask=mask;
     const buildings = [0,1,2].map(i=>sprite(art.cityLayer(i),city));
+    const signals = [
+      sprite(art.citySignal(20,59,'sign'),city),
+      sprite(art.citySignal(69,39,'antenna'),city),
+      sprite(art.citySignal(109,73,'windows'),city),
+      sprite(art.citySignal(158,50,'sign'),city),
+      sprite(art.citySignal(198,65,'windows'),city),
+      sprite(art.citySignal(238,43,'antenna'),city),
+    ];
     sprite(art.windowFrame());sprite(art.rug());sprite(art.poster());sprite(art.television());
     sprite(art.desk());sprite(art.jukebox());sprite(art.props());sprite(art.sofa());
     const glow=sprite(art.neon());
@@ -33,6 +41,10 @@ function World({ motion, ready }: { motion: boolean; ready: () => void }) {
       glow.alpha=motion ? 0.7+Math.sin(elapsed*Math.PI/2)*0.16 : 0.8;
       px+=(target-px)*0.03;
       buildings.forEach((layer,i)=>{layer.x=motion ? -8+px*i+Math.sin(elapsed*0.15)*i : -8;});
+      signals.forEach((signal,i)=>{
+        signal.x=motion ? -8+px*1.4 : -8;
+        signal.alpha=motion ? 0.55+0.35*(1+Math.sin(elapsed*2*Math.PI/(3.6+i*0.32)+i*1.7))/2 : 0.72;
+      });
     };
     app.ticker.maxFPS=30;app.ticker.add(tick);
     tick();

@@ -10,7 +10,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "test": "playwright test",
-    "audio:generate": "node scripts/generate-audio.mjs"
+    "audio:generate": "node scripts/generate-audio.mjs",
+    "audio:music": "node scripts/generate-game-loop.mjs"
   },
   "dependencies": {
     "@fontsource/silkscreen": "^5.2.5",

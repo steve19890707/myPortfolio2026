@@ -40,9 +40,7 @@ Empty project/contact URLs are displayed as pending rather than linked to fictio
 npm run audio:generate
 ```
 
-The initial sounds are deterministic synthesized placeholders, not AI-generated music. Regeneration overwrites the four placeholder WAV files. The BGM is a calm, low synth texture with a seamless 64-second loop. Replace the files or update the paths in `config.ts` after listening. Assets load only after the sound control is activated.
 
-Suggested future music-generation prompt: "A quiet mysterious cyberpunk personal studio at night. Slow ambient synth pads, low warm bass, subtle luminous electronic notes, no vocals, no sharp percussion, no dramatic build-up. Seamless 64-second loop. Understated and suitable for reading."
 
 ## GitHub Pages
 
@@ -70,3 +68,5 @@ Tests cover furniture and quick-access panels, keyboard focus, all language choi
 - https://pixijs.com/8.x/guides/components/ticker
 
 Optional GSAP and @pixi/layout remain deferred: the current animation and scene layout do not require them.
+
+Audio includes three locally synthesized, replaceable UI effects and a new original game-style loop at `public/audio/game-loop.wav`. Playback is disabled until the sound control is enabled. Run `npm run audio:generate` to regenerate UI effects, or `npm run audio:music` for the music. The music is 51.43 seconds at 112 BPM, based on an estimated rhythmic pulse from the supplied recording, without sampling its audio or transcribing its melody. Hidden tabs pause playback. Replace the music through `assets.audio.bgm` in `src/content/config.ts`.
