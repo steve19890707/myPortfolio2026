@@ -44,13 +44,11 @@ npm run audio:generate
 
 ## GitHub Pages
 
-The build uses relative asset paths and no client-side routes, so a repository subpath works without changing the app. After creating a GitHub repository and configuring its `origin` remote:
+The build uses relative asset paths and no client-side routes, so a repository subpath works without changing the app.
 
-```sh
-npm run deploy
-```
+GitHub Pages is deployed by GitHub Actions from `main`. Push changes to `main`, and `.github/workflows/deploy-pages.yml` builds the project and publishes the generated `dist` artifact through the official Pages deployment action.
 
-`predeploy` builds the site, and `gh-pages` publishes `dist`. In GitHub Pages settings, use the `gh-pages` branch root. Repository creation, pushing, and public deployment have not been performed automatically.
+In GitHub Pages settings, set the source to `GitHub Actions`.
 
 ## Verification
 
