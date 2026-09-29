@@ -26,7 +26,7 @@ export default function Panel({id}:{id:PanelId}) {
         <p className="demo-note"><span>{t('placeholder')}</span> {t('placeholderNote')}</p>
         <PanelContent id={id}/>
       </div>
-      <footer className="panel-footer"><span>AL / {t(`sections.${id}`).toUpperCase()}</span><button className="text-button" onClick={()=>{playSound('click');open(panelIds[(panelIds.indexOf(id)+1)%panelIds.length]);ref.current?.querySelector('.panel-body')?.scrollTo(0,0);}}>{t('next')} <ArrowUpRight size={16}/></button></footer>
+      <footer className="panel-footer"><span>ZL / {t(`sections.${id}`).toUpperCase()}</span><button className="text-button" onClick={()=>{playSound('click');open(panelIds[(panelIds.indexOf(id)+1)%panelIds.length]);ref.current?.querySelector('.panel-body')?.scrollTo(0,0);}}>{t('next')} <ArrowUpRight size={16}/></button></footer>
     </motion.div>
   </dialog>;
 }

@@ -1,6 +1,6 @@
 export const en = {
-  brand: 'AL', world: 'THE NEON ROOM', edition: 'PORTFOLIO / 2026',
-  name: 'Alex Lin', firstName: 'Alex', lastName: 'Lin', role: 'Frontend engineer.',
+  brand: 'ZL', world: 'THE NEON ROOM', edition: 'PORTFOLIO / 2026',
+  name: 'Zteve Liu', firstName: 'Zteve', lastName: 'Liu', role: 'Frontend engineer.',
   roleSecond: 'World builder.', location: 'TAIPEI, TAIWAN', availability: 'Open to opportunities',
   introduction: 'Thoughtful interfaces. Playful experiences. A little neon after dark.',
   enter: 'Explore my work', resume: 'Resume PDF', resumePending: 'Resume coming soon',
@@ -11,7 +11,7 @@ export const en = {
   motionOn: 'Pause animation and music', motionOff: 'Resume animation and music', close: 'Close',
   loading: 'Connecting to room...', sceneError: 'Room unavailable. All sections are available below.',
   placeholder: 'DEMO CONTENT', placeholderNote: 'Sample information. Final details are on the way.',
-  footer: 'A SMALL ROOM. A WORLD OF POSSIBILITIES.', copyright: '2026 / ALEX LIN',
+  footer: 'A SMALL ROOM. A WORLD OF POSSIBILITIES.', copyright: '2026 / ZTEVE LIU',
   panelCode: 'PERSONAL ARCHIVE', next: 'Next section', contactCta: 'Let\'s build something',
   profile: {
     title: 'Behind the screen', subtitle: 'ENGINEER / CREATOR / EXPLORER',

@@ -334,7 +334,7 @@ No conflict found with the current plan. The only rule to preserve is that repla
 
 ### Opening Screen
 
-- Name: Alex Lin
+- Name: Zteve Liu
 - Target role: Creative Frontend Engineer
 - Tagline: I build interactive web experiences with code, motion, and a little neon.
 - Primary button: Enter Room
@@ -361,7 +361,7 @@ No conflict found with the current plan. The only rule to preserve is that repla
 ### TV / Profile Panel
 
 - Title: Profile
-- Name: Alex Lin
+- Name: Zteve Liu
 - Role: Creative Frontend Engineer
 - Avatar: use a generated pixel-style fictional cyberpunk persona as the placeholder profile image
 - Avatar can be user-inspired later, but the final style should still remain fictional cyberpunk persona
